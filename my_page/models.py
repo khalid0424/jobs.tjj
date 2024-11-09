@@ -2,7 +2,7 @@ from django.db import models
 
 
 
-class User_profie(models.Model):
+'''class User_profie(models.Model):
     name = models.CharField(max_length=25)
     surename = models.CharField(max_length=25)
     date_birth =models.DateTimeField()
@@ -17,7 +17,7 @@ class User_profie(models.Model):
 
 
     def __str__(self):
-        return f"{self.name} {self.surename}"
+        return f"{self.name} {self.surename}"'''
   
 
 class Category(models.Model):
@@ -35,7 +35,7 @@ class Job(models.Model):
     salary = models.DecimalField(max_digits=10, decimal_places=2)  
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)  
     date_posted = models.DateTimeField(auto_now_add=True)  
-    image_poster= models.ImageField(upload_to='images/', blank=True)
+    image_poster= models.ImageField(upload_to='static/images', blank=True)
     
 
     def __str__(self):

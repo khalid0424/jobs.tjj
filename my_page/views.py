@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from .models import Job, Category,User_profie
+from .models import Job, Category
 
 
 

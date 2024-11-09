@@ -1,59 +1,20 @@
+{% load static %}<!-- static/templates/job_detail.html -->
 <!DOCTYPE html>
 <html lang="tg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тафсилоти Кор</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .job-details {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .job-details h1 {
-            margin-top: 0;
-        }
-        .job-details p {
-            margin: 10px 0;
-        }
-        .salary {
-            color: green;
-            font-weight: bold;
-        }
-        .back-link {
-            margin-top: 20px;
-        }
-    </style>
+    <title>{{ job.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="job-details">
-            <h1>{{ job.title }}</h1>
-            <p><strong>Ширкат:</strong> {{ job.company }}</p>
-            <p><strong>Ҷойгиршавӣ:</strong> {{ job.location }}</p>
-            <p><strong>Соҳа:</strong> {{ job.category.name }}</p>
-            <p><strong>Музд:</strong> <span class="salary">{{ job.salary }} TJS</span></p>
-            <p>{{ job.description }}</p>
-            {% if job.image_poster %}
-                <p><strong>Постер:</strong></p>
-                <img src="{{ job.image_poster.url }}" alt="Poster of {{ job.title }}" style="max-width: 100%; height: auto;">
-            {% endif %}
-        </div>
-        <div class="back-link">
-            <a href="{% url 'home' %}">Ба саҳифаи асосӣ баргардед</a>
-        </div>
+    <div class="job-detail">
+        <img src="{% static 'images/' %}{{ job.image_poster }}" alt="{{ job.title }}" class="job-detail-image">
+        <h1>{{ job.title }}</h1>
+        <p><strong>Ширкат:</strong> {{ job.company }}</p>
+        <p><strong>Ҷойгиршавӣ:</strong> {{ job.location }}</p>
+        <p><strong>Маош:</strong> {{ job.salery }}</p>
+        <p>{{ job.description }}</p>
+        <p><strong>Рӯзи нашр:</strong> {{ job.date_post }}</p>
     </div>
 </body>
 </html>

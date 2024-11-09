@@ -1,95 +1,39 @@
+{% load static %}<!-- static/templates/home.html -->
 <!DOCTYPE html>
 <html lang="tg">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Саҳифаи Ҷустуҷӯи Кор</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-        }
-        .search-bar {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        input[type="text"], select {
-            width: 300px;
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .job-listings {
-            margin-top: 30px;
-        }
-        .job {
-            background-color: white;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .job h3 {
-            margin: 0;
-        }
-        .job p {
-            margin: 5px 0;
-        }
-        .job .salary {
-            color: green;
-        }
-    </style>
+    <title>Саҳифаи Корҳо</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Саҳифаи Ҷустуҷӯи Кор</h1>
-        
-        <!-- Сатри ҷустуҷӯ -->
-        <div class="search-bar">
-            <form method="GET">
-                <input type="text" name="q" placeholder="Номи кор ё ширкат" value="{{ request.GET.q }}">
-                <select name="category">
-                    <option value="">Ҳама соҳаҳо</option>
-                    {% for category in categories %}
-                        <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Ҷустуҷӯ</button>
-            </form>
-        </div>
-        
-        <!-- Намоиши корҳо -->
-        <div class="job-listings">
-            {% for job in jobs %}
-                <div class="job">
-                    <h3>{{ job.title }}</h3>
-                    <p>Ҷойгиршавӣ: {{ job.location }}</p>
-                    <p>Соҳа: {{ job.category.name }}</p>
-                    <p class="salary">Музд: {{ job.salary }} TJS</p>
-                    <p>{{ job.description }}</p>
-                </div>
+    <h1>Рӯйхати Корҳо</h1>
+
+    <!-- Филтри категорияҳо -->
+    <form method="GET" action="{% url 'home' %}">
+        <label for="category">Филтр бо категория:</label>
+        <select name="category" id="category">
+            <option value="">Ҳамаи категорияҳо</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
+        </select>
+        <button type="submit">Филтр</button>
+    </form>
+
+    <!-- Рӯйхати корҳо -->
+    <div class="jobs-container">
+        {% for job in jobs %}
+        <div class="job-card">
+            <img src="{% static 'images/' %}{{ job.image_poster }}" alt="{{ job.title }}" class="job-image">
+            <h2>{{ job.title }}</h2>
+            <p>Ширкат: {{ job.company }}</p>
+            <p>Ҷойгиршавӣ: {{ job.location }}</p>
+            <a href="{% url 'job_detail' job.id %}">Бештар</a>
         </div>
+        {% empty %}
+        <p>Ҳеҷ коре вуҷуд надорад.</p>
+        {% endfor %}
     </div>
 </body>
 </html>
